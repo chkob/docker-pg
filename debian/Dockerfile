@@ -87,10 +87,10 @@ RUN set -ex; \
 	rm -rf "$GNUPGHOME"; \
 	apt-key list
 
-ENV PG_MAJOR 13
+ENV PG_MAJOR 14
 ENV PATH $PATH:/usr/lib/postgresql/$PG_MAJOR/bin
 
-ENV PG_VERSION 13.4-1.pgdg100+1
+ENV PG_VERSION 14~beta3-1.pgdg100+1
 
 RUN set -ex; \
 	\
@@ -116,8 +116,6 @@ RUN set -ex; \
 			\
 # build .deb files from upstream's source packages (which are verified by apt-get)
 			apt-get update; \
-# we need DEBIAN_FRONTEND on postgresql-13 for slapd ("Please enter the password for the admin entry in your LDAP directory."); see https://bugs.debian.org/929417
-			DEBIAN_FRONTEND=noninteractive \
 			apt-get build-dep -y \
 				postgresql-common pgdg-keyring \
 				"postgresql-$PG_MAJOR=$PG_VERSION" \

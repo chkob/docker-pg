@@ -22,9 +22,9 @@ ENV LANG en_US.utf8
 
 RUN mkdir /docker-entrypoint-initdb.d
 
-ENV PG_MAJOR 13
-ENV PG_VERSION 13.4
-ENV PG_SHA256 ea93e10390245f1ce461a54eb5f99a48d8cabd3a08ce4d652ec2169a357bc0cd
+ENV PG_MAJOR 14
+ENV PG_VERSION 14beta3
+ENV PG_SHA256 2ea265980193db70106576201a2fee5b2d72bf9890d3911ddd374d4830624bfa
 
 RUN set -eux; \
 	\
@@ -67,6 +67,8 @@ RUN set -eux; \
 		zlib-dev \
 # https://www.postgresql.org/docs/10/static/release-10.html#id-1.11.6.9.5.13
 		icu-dev \
+# https://www.postgresql.org/docs/14/release-14.html#id-1.11.6.5.5.3.7
+		lz4-dev \
 	; \
 	\
 	cd /usr/src/postgresql; \
@@ -112,6 +114,7 @@ RUN set -eux; \
 		--with-libxslt \
 		--with-icu \
 		--with-llvm \
+		--with-lz4 \
 	; \
 	make -j "$(nproc)" world; \
 	make install-world; \
